@@ -32,4 +32,8 @@ yes | pacman -S screen
 
 yes | pacman -S git
 
+### install docker
+yes | pacman -S docker
 
+# start docker deamon on reboot
+systemctl start docker.service
