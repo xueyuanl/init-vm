@@ -32,6 +32,8 @@ yes | pacman -S screen
 
 yes | pacman -S git
 
+yes | pacman -S gnu-netcat
+
 ### install docker
 yes | pacman -S docker
 
