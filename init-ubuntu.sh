@@ -8,6 +8,7 @@ sudo apt-get install -y git
 sudo apt-get install -y curl
 sudo apt-get install -y wget
 sudo apt-get install -y npm
+sudo apt-get install -y net-tools
 
 #install docker
 #Install packages to allow apt to use a repository over HTTPS:
