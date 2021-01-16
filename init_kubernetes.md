@@ -1,5 +1,5 @@
-# Init master node
-the number of available CPUs is at least 2
+# Init nodes
+the number of available CPUs of master node is at least 2
 This guild based on ubuntu server.
 reference: https://kubernetes.io/docs/setup/production-environment/tools/kubeadm/install-kubeadm/
 
@@ -50,17 +50,16 @@ sudo apt-get install -y kubelet kubeadm kubectl
 sudo apt-mark hold kubelet kubeadm kubectl
 ```
 
+### Diasble swap
+```
+sudo swapoff -a
+```
+
 # Creating a cluster with kubeadm
 
 reference: https://kubernetes.io/docs/setup/production-environment/tools/kubeadm/create-cluster-kubeadm/
 
 ### Initializing your control-plane node
-
-disable swap
-```
-sudo swapoff -a
-```
-
 
 log in as root:
 ```
@@ -68,7 +67,7 @@ sudo su -
 ```
 
 ```
-kubeadm init
+kubeadm init --pod-network-cidr=10.244.0.0/16
 ```
 
 after success
