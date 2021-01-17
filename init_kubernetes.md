@@ -3,6 +3,17 @@ the number of available CPUs of master node is at least 2
 This guild based on ubuntu server.
 reference: https://kubernetes.io/docs/setup/production-environment/tools/kubeadm/install-kubeadm/
 
+Tested ok with ubuntu-20.04.1
+### Diasble swap
+```
+sudo sed -i '/ swap / s/^/#/' /etc/fstab
+```
+
+```
+sudo swapoff -a  # does not persist across a reboot
+```
+
+
 ### Letting iptables see bridged traffic
 ```
 sudo modprobe br_netfilter  # enable br_netfilter module 
@@ -30,6 +41,7 @@ curl -fsSL https://get.docker.com -o get-docker.sh
 sudo sh get-docker.sh
 sudo usermod -aG docker <your-user>  # log out and log in
 ```
+refernece: https://kubernetes.io/docs/setup/production-environment/container-runtimes/
 
 ### Installing kubeadm, kubelet and kubectl
 
@@ -50,24 +62,14 @@ sudo apt-get install -y kubelet kubeadm kubectl
 sudo apt-mark hold kubelet kubeadm kubectl
 ```
 
-### Diasble swap
-```
-sudo swapoff -a
-```
-
 # Creating a cluster with kubeadm
 
 reference: https://kubernetes.io/docs/setup/production-environment/tools/kubeadm/create-cluster-kubeadm/
 
 ### Initializing your control-plane node
 
-log in as root:
 ```
-sudo su -
-```
-
-```
-kubeadm init --pod-network-cidr=10.244.0.0/16
+sudo kubeadm init --pod-network-cidr=10.244.0.0/16
 ```
 
 after success
@@ -80,6 +82,14 @@ sudo chown $(id -u):$(id -g) $HOME/.kube/config
 Alternatively, if you are the root user, you can run:
 ```
 export KUBECONFIG=/etc/kubernetes/admin.conf
+```
+
+### Installing Addons
+reference: https://kubernetes.io/docs/concepts/cluster-administration/addons/
+
+use flannel: https://github.com/coreos/flannel#flannel
+```
+kubectl apply -f https://raw.githubusercontent.com/coreos/flannel/master/Documentation/kube-flannel.yml
 ```
 
 # Joining your nodes
