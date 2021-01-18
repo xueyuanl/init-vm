@@ -3,7 +3,7 @@ the number of available CPUs of master node is at least 2
 This guild based on ubuntu server.
 reference: https://kubernetes.io/docs/setup/production-environment/tools/kubeadm/install-kubeadm/
 
-Tested ok with ubuntu-20.04.1
+Tested ok with ubuntu-20.04.1 TLS server
 ### Diasble swap
 ```
 sudo sed -i '/ swap / s/^/#/' /etc/fstab
@@ -57,7 +57,7 @@ curl -s https://packages.cloud.google.com/apt/doc/apt-key.gpg | sudo apt-key add
 cat <<EOF | sudo tee /etc/apt/sources.list.d/kubernetes.list
 deb https://apt.kubernetes.io/ kubernetes-xenial main
 EOF
-sudo apt-get update
+sudo apt-get update  # if get Certificate verification failed error, use `root` exec previous two command, remove inline `sudo`.
 sudo apt-get install -y kubelet kubeadm kubectl
 sudo apt-mark hold kubelet kubeadm kubectl
 ```
@@ -90,6 +90,8 @@ reference: https://kubernetes.io/docs/concepts/cluster-administration/addons/
 use flannel: https://github.com/coreos/flannel#flannel
 ```
 kubectl apply -f https://raw.githubusercontent.com/coreos/flannel/master/Documentation/kube-flannel.yml
+
+kubectl get pods --all-namespaces  # check status
 ```
 
 # Joining your nodes

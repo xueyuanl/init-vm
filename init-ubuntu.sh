@@ -1,7 +1,7 @@
 #!/bin/bash
 
 sudo apt-get -y update
-sudo apt-get install -y openssh-server openssh-client screen git curl wget npm net-tools vim
+sudo apt-get install -y openssh-server openssh-client screen git curl wget npm net-tools vim make
 
 #install docker
 #Install packages to allow apt to use a repository over HTTPS:
