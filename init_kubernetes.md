@@ -108,7 +108,8 @@ Become root (e.g. sudo su -)
 kubeadm join 192.168.2.53:6443 --token 94tqyr.eut4j144ntbvd49o     --discovery-token-ca-cert-hash sha256:c7d119e739a8969974c9f5a186e244a922b183224477f6e978cd0260b02c5471
 ```
 
-# Tips:
+# Tips
+
 ### Set autocomplete 
 ```
 source <(kubectl completion bash) # setup autocomplete in bash into the current shell, bash-completion package should be installed first.
@@ -135,3 +136,20 @@ network:
   version: 2
 ```
 then `sudo netplan apply`
+
+### docker on worker use master docker daemon
+config daemon, edit `/lib/systemd/system/docker.service`
+```
+[Service]
+ExecStart=/usr/bin/dockerd --containerd=/run/containerd/containerd.sock -H tcp://0.0.0.0:2375
+```
+then restart:
+```
+sudo systemctl daemon-reload
+sudo systemctl restart docker.service
+```
+
+config on client side:
+`docker -H <master-ip>:2375 ps`
+
+`export DOCKER_HOST="tcp://<<master-ip>:2375"`
