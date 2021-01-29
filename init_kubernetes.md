@@ -107,3 +107,31 @@ Become root (e.g. sudo su -)
 ```
 kubeadm join 192.168.2.53:6443 --token 94tqyr.eut4j144ntbvd49o     --discovery-token-ca-cert-hash sha256:c7d119e739a8969974c9f5a186e244a922b183224477f6e978cd0260b02c5471
 ```
+
+# Tips:
+### Set autocomplete 
+```
+source <(kubectl completion bash) # setup autocomplete in bash into the current shell, bash-completion package should be installed first.
+echo "source <(kubectl completion bash)" >> ~/.bashrc # add autocomplete permanently to your bash shell.
+```
+
+### set alias 
+```
+alias ks=kubectl
+complete -F __start_kubectl ks
+```
+
+Reference: https://kubernetes.io/docs/reference/kubectl/cheatsheet/
+
+### set dns
+vim /etc/netplan/00---.yaml
+```
+network:
+  ethernets:
+    ens160:
+      dhcp4: true
+      nameservers:
+         addresses: [10.84.70.100]
+  version: 2
+```
+then `sudo netplan apply`
